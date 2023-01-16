@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    karateVersion = '1.2.0.RC3'
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+dependencies {
+    implementation "com.intuit.karate:karate-junit5:${karateVersion}"
+    implementation 'net.masterthought:cucumber-reporting:5.6.1'
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDir file('src/test/java')
+            exclude '**/*.java'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform() // junit5
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+    outputs.upToDateWhen { false }
+}
+
+repositories {
+    mavenCentral()
+}
